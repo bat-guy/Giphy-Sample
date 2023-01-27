@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Gif Example</string>
+    <string name="trending">Trending</string>
+    <string name="favourite">Favourite</string>
+</resources>
