@@ -1,5 +1,6 @@
 package com.example.gifexample.db
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.gifexample.model.GifEntity
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +18,7 @@ interface FavouriteDao {
 
     @Query("SELECT * from favourite_table")
     suspend fun getFavouriteList(): List<GifEntity>
+
+    @Query("SELECT * FROM favourite_table ORDER BY id DESC")
+    fun fetchFavouriteList(): PagingSource<Int, GifEntity>
 }

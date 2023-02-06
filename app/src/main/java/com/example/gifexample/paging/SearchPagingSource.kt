@@ -2,6 +2,7 @@ package com.example.gifexample.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.gifexample.util.Constants.Companion.SEARCH_PAGE_LIMIT
 import com.example.gifexample.db.FavouriteDao
 import com.example.gifexample.model.GifEntity
 import com.example.gifexample.remote.ApiService
@@ -13,10 +14,6 @@ import javax.inject.Inject
  */
 class SearchPagingSource @Inject constructor(private val query: String, private val api: ApiService, private val dao: FavouriteDao) :
     PagingSource<Int, GifEntity>() {
-
-    companion object {
-        const val SEARCH_PAGE_LIMIT = 15
-    }
 
     override fun getRefreshKey(state: PagingState<Int, GifEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

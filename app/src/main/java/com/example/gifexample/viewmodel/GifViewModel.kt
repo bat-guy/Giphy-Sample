@@ -33,8 +33,7 @@ class GifViewModel @Inject constructor(private val repo: MyRepo) : ViewModel() {
     }
 
     val trendingList = repo.fetchTrendingList()?.cachedIn(viewModelScope)
-
-    val favouriteList = repo.getFavouriteList()
+    val favouriteList = repo.fetchFavouriteList().cachedIn(viewModelScope)
 
     /**
      * Method called when favourite button is clicked.
@@ -57,7 +56,7 @@ class GifViewModel @Inject constructor(private val repo: MyRepo) : ViewModel() {
     fun onSearch(data: String?) {
         if (data != _searchQuery.value) {
             _typeLd.value = if (data.isNullOrEmpty().not()) SEARCH else TRENDING
-            _searchQuery.value = data
+            _searchQuery.value = data ?: ""
         }
     }
 

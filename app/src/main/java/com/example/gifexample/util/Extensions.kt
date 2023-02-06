@@ -1,4 +1,4 @@
-package com.example.gifexample
+package com.example.gifexample.util
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
@@ -9,7 +9,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 
 
-object Extensions {
+internal object Extensions {
 
     val Int.px: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()

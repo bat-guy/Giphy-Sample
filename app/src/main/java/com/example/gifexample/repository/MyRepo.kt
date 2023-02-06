@@ -11,4 +11,5 @@ interface MyRepo {
     suspend fun addFavourite(data: GifEntity)
     suspend fun removeFavourite(data: GifEntity)
     fun fetchTrendingList(): Flow<PagingData<GifEntity>>?
+    fun fetchFavouriteList(): Flow<PagingData<GifEntity>>
 }

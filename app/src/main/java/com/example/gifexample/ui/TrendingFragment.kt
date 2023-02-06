@@ -11,12 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gifexample.Extensions.gone
-import com.example.gifexample.Extensions.visible
-import com.example.gifexample.adapter.GifItemClickListener
-import com.example.gifexample.adapter.TrendingRecyclerAdapter
+import com.example.gifexample.adapter.GifRecyclerAdapter
 import com.example.gifexample.databinding.FragmentGifBinding
 import com.example.gifexample.model.GifEntity
+import com.example.gifexample.util.Extensions.gone
+import com.example.gifexample.util.Extensions.visible
+import com.example.gifexample.util.GifItemClickListener
+import com.example.gifexample.util.GifListType
 import com.example.gifexample.viewmodel.GifViewModel
 import com.example.gifexample.viewmodel.GifViewModel.Companion.SEARCH
 import com.example.gifexample.viewmodel.GifViewModel.Companion.TRENDING
@@ -31,8 +32,8 @@ class TrendingFragment : Fragment(), GifItemClickListener {
 
     private lateinit var binding: FragmentGifBinding
     private lateinit var viewModel: GifViewModel
-    private val trendingAdapter = TrendingRecyclerAdapter(this)
-    private val searchAdapter = TrendingRecyclerAdapter(this)
+    private val trendingAdapter = GifRecyclerAdapter(GifListType.TRENDING_LIST, this)
+    private val searchAdapter = GifRecyclerAdapter(GifListType.SEARCH_LIST, this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGifBinding.inflate(inflater, container, false)
@@ -48,7 +49,7 @@ class TrendingFragment : Fragment(), GifItemClickListener {
     private fun initViewModel() {
         viewModel = ViewModelProvider(requireActivity())[GifViewModel::class.java]
         viewModel.let {
-            lifecycleScope.launch {
+            lifecycleScope.launchWhenCreated {
                 it.typeLd.observe(viewLifecycleOwner) {
                     it?.let { setViewType(it) }
                 }
@@ -101,7 +102,7 @@ class TrendingFragment : Fragment(), GifItemClickListener {
     /**
      * Method that sets up the loader state for the
      */
-    private fun setLoaderState(adapter: TrendingRecyclerAdapter) {
+    private fun setLoaderState(adapter: GifRecyclerAdapter) {
         lifecycleScope.launch(Dispatchers.Main) {
             adapter.loadStateFlow.collectLatest { loadState ->
                 if (loadState.refresh is LoadState.Loading) {
